@@ -734,3 +734,9 @@ function create<T>(c: {new(): T; }): T {
     return new c();
 }
 ```
+
+## 类型推断
+
+1. 基础类型
+2. 最佳通用类型
+3. 上下文类型
