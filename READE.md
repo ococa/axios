@@ -740,3 +740,121 @@ function create<T>(c: {new(): T; }): T {
 1. 基础类型
 2. 最佳通用类型
 3. 上下文类型
+
+## 高级类型
+
+1. 交叉类型 & -> a&b -> a和b的都有
+2. 联合类型 | -> a|b -> a或b 或者
+校验的时候 --> a|b -> a或b
+```
+function padLeft(value: string, padding: string | number) {
+    // ...
+}
+
+let indentedString = padLeft("Hello world", true); // errors during compilation
+```
+值检查的时候 --> a|b -> a&b
+当一个值是联合类型，我们只能访问此联合类型的所有类型里共有的成员
+```
+interface Bird {
+    fly();
+    layEggs();
+}
+
+interface Fish {
+    swim();
+    layEggs();
+}
+
+function getSmallPet(): Fish | Bird {
+    // ...
+}
+
+let pet = getSmallPet();
+pet.layEggs(); // okay
+pet.swim();    // errors
+```
+
+3. 类型保护和区分类型
+类型保护
+```
+// js 情况
+let pet = getSmallPet();
+
+// 每一个成员访问都会报错
+if (pet.swim) {
+    pet.swim();
+}
+else if (pet.fly) {
+    pet.fly();
+}
+```
+ts对应情况
+```
+let pet = getSmallPet();
+
+if ((pet as Fish).swim) {
+    (pet as Fish).swim();
+}
+else {
+    (pet as Bird).fly();
+}
+```
+上面太繁琐，使用自定义类型保护
+```
+function isFish(pet: Fish | Bird): pet is Fish {
+    return (<Fish>pet).swim !== undefined;
+}
+
+//  'swim' 和 'fly' 调用都没有问题了
+// TypeScript不仅知道在 if分支里 pet是 Fish类型； 它还清楚在 else分支里，一定 不是 Fish类型，一定是 Bird类型。
+if (isFish(pet)) {
+    pet.swim();
+}
+else {
+    pet.fly();
+}
+
+```
+- typeof 类型保护
+- instanceof 类型保护
+- 可以为null的类型
+```
+let s = "foo";
+s = null; // 错误, 'null'不能赋值给'string'
+let sn: string | null = "bar";
+sn = null; // 可以
+
+sn = undefined; // error, 'undefined'不能赋值给'string | null'
+```
+```
+class C {
+    a: number;
+    b?: number;
+}
+let c = new C();
+c.a = 12;
+c.a = undefined; // error, 'undefined' is not assignable to 'number'
+c.b = 13;
+c.b = undefined; // ok
+c.b = null; // error, 'null' is not assignable to 'number | undefined'
+```
+- 类型保护和类型断言
+如果编译器不能够去除 null或 undefined，你可以使用类型断言手动去除。 语法是添加 !后缀： identifier!从 identifier的类型里去除了 null和 undefined：
+```
+function broken(name: string | null): string {
+  function postfix(epithet: string) {
+    return name.charAt(0) + '.  the ' + epithet; // error, 'name' is possibly null
+  }
+  name = name || "Bob";
+  return postfix("great");
+}
+
+function fixed(name: string | null): string {
+  function postfix(epithet: string) {
+    return name!.charAt(0) + '.  the ' + epithet; // ok
+  }
+  name = name || "Bob";
+  return postfix("great");
+}
+```
