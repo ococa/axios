@@ -127,3 +127,21 @@ interface Point {
 let p1: Point = { x: 10, y: 20 };
 p1.x = 5; // error!
 ```
+4. 只读数组
+```
+let a: number[] = [1, 2, 3, 4];
+let ro: ReadonlyArray<number> = a;
+ro[0] = 12; // error!
+ro.push(5); // error!
+ro.length = 100; // error!
+a = ro; // error!
+```
+5. 额外的属性检查
+[propName: string]: any;
+```
+interface SquareConfig {
+    color?: string;
+    width?: number;
+    [propName: string]: any;
+}
+```

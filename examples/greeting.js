@@ -1,11 +1,6 @@
 function createSquare(config) {
-    var newSquare = { color: "white", area: 100 };
-    if (config.color) {
-        newSquare.color = config.color;
-    }
-    if (config.width) {
-        newSquare.area = config.width * config.width;
-    }
-    return newSquare;
+    // ...
+    return config;
 }
-var mySquare = createSquare({ color: "black" });
+var squareOptions = { colourss: "red", width: 100 };
+var mySquare = createSquare(squareOptions);

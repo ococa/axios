@@ -1,6 +1,13 @@
-interface Point {
-  readonly x: number;
-  readonly y: number;
+interface SquareConfig {
+  color?: string;
+  width?: number;
+  [propName: string]: any;
 }
-let p1: Point = { x: 10, y: 20 };
-p1.x = 5; // error!
+
+function createSquare(config: SquareConfig) {
+  // ...
+  return config;
+}
+
+let squareOptions: SquareConfig = { colourss: "red", width: 100 };
+let mySquare = createSquare(squareOptions);
