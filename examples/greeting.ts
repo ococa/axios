@@ -1,29 +1,25 @@
-// 构造器 静态部分接口
-interface ClockConstructor {
-  new (hour: number, minute: number): ClockInterface;
-}
-// 构造器实例部分接口
-interface ClockInterface {
-  tick();
+class Control {
+  private state: any;
 }
 
-// 工厂模式
-function createClock(ctor: ClockConstructor, hour: number, minute: number): ClockInterface {
-  return new ctor(hour, minute);
+interface SelectableControl extends Control {
+  select(): void;
 }
 
-class DigitalClock implements ClockInterface {
-  constructor(h: number, m: number) { }
-  tick() {
-      console.log("beep beep");
-  }
-}
-class AnalogClock implements ClockInterface {
-  constructor(h: number, m: number) { }
-  tick() {
-      console.log("tick tock");
-  }
+class Button extends Control implements SelectableControl {
+  select() { }
 }
 
-let digital = createClock(DigitalClock, 12, 17);
-let analog = createClock(AnalogClock, 7, 32);
+// Error: Property 'state' is missing in type 'Image'.
+class Image implements SelectableControl {
+  select() { }
+}
+
+
+class TextBox extends Control {
+
+}
+
+class Location {
+
+}
