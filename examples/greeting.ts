@@ -1,13 +1,12 @@
-interface SquareConfig {
-  color?: string;
-  width?: number;
-  [propName: string]: any;
+class Animal {
+  name: string;
+}
+class Dog extends Animal {
+  breed: string;
 }
 
-function createSquare(config: SquareConfig) {
-  // ...
-  return config;
+// 错误：使用'string'索引，有时会得到Animal!
+interface NotOkay {
+  [x: number]: Animal;
+  [x: string]: Dog;
 }
-
-let squareOptions: SquareConfig = { colourss: "red", width: 100 };
-let mySquare = createSquare(squareOptions);

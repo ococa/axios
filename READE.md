@@ -145,3 +145,59 @@ interface SquareConfig {
     [propName: string]: any;
 }
 ```
+6. 函数类型
+interface 接口类型name {
+  (args: type, args2: type): type;     // (参数key：参数类型)： return类型
+}
+```
+interface SearchFunc {
+  (source: string, subString: string): boolean;
+}
+let mySearch: SearchFunc;
+/**
+ * 函数类型的接口描述
+ */
+mySearch = function(source: string, subString: string) {
+  let result = source.search(subString);
+  return result > -1;
+}
+/**
+ * 简单写法
+ */
+
+let mySearch2: SearchFunc;
+mySearch2 = function(src, sub) {
+    let result = src.search(sub);
+    return result > -1;
+}
+
+```
+7. 可索引的类型
+不太懂。。。。
+
+8. 类类型
+```
+interface ClockInterface {
+    currentTime: Date;
+}
+
+class Clock implements ClockInterface {
+    currentTime: Date;
+    constructor(h: number, m: number) { }
+}
+```
+你也可以在接口中描述一个方法，在类里实现它，如同下面的setTime方法一样：
+```
+interface ClockInterface {
+    currentTime: Date;
+    setTime(d: Date);
+}
+
+class Clock implements ClockInterface {
+    currentTime: Date;
+    setTime(d: Date) {
+        this.currentTime = d;
+    }
+    constructor(h: number, m: number) { }
+}
+```
