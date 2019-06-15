@@ -291,3 +291,53 @@ c.reset();
 c.interval = 5.0;
 ```
 12. 接口继承类
+当接口继承了一个类类型时，它会继承类的成员但不包括其实现。 就好像接口声明了所有类中存在的成员，但并没有提供具体实现一样。
+```
+class Control {
+    private state: any;
+}
+
+interface SelectableControl extends Control {
+    select(): void;
+}
+
+class Button extends Control implements SelectableControl {
+    select() { }
+}
+
+class TextBox extends Control {
+
+}
+
+// Error: Property 'state' is missing in type 'Image'.
+class Image implements SelectableControl {
+    select() { }
+}
+
+class Location {
+
+}
+```
+
+## class
+
+1. 类
+
+我们在引用任何一个类成员的时候都用了this。 它表示我们访问的是类的成员。
+
+最后一行，我们使用new构造了Greeter类的一个实例。 它会调用之前定义的构造函数，创建一个Greeter类型的新对象，并执行构造函数初始化它。
+
+```
+class Greeter {
+  greeting: string;
+  constructor(message: string) {
+    this.greeting = message;
+  }
+  greet() {
+    returhn 'hello  ' + this.greeting
+  }
+}
+let greeter = new Greeter('world');
+```
+
+2. 继承
