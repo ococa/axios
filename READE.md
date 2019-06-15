@@ -237,3 +237,54 @@ let digital = createClock(DigitalClock, 12, 17);
 let analog = createClock(AnalogClock, 7, 32);
 
 ```
+
+10. 继承接口
+```
+interface Shape {
+    color: string;
+}
+
+interface PenStroke {
+    penWidth: number;
+}
+// 单个继承
+interface Square extends Shape {
+    sideLength: number;
+}
+
+let square = <Square>{};
+square.color = "blue";
+square.sideLength = 10;
+
+// 多个继承
+interface Square extends Shape, PenStroke {
+    sideLength: number;
+}
+
+let square2 = <Square>{};
+square2.color = "blue";
+square2.sideLength = 10;
+square2.penWidth = 5.0;
+```
+11. 混合类型
+
+希望一个对象可以同时具有上面提到的多种类型
+```
+interface Counter {
+    (start: number): string;
+    interval: number;
+    reset(): void;
+}
+
+function getCounter(): Counter {
+    let counter = <Counter>function (start: number) { };
+    counter.interval = 123;
+    counter.reset = function () { };
+    return counter;
+}
+
+let c = getCounter();
+c(10);
+c.reset();
+c.interval = 5.0;
+```
