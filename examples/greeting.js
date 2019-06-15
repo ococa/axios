@@ -1,9 +1,22 @@
-var Animal = /** @class */ (function () {
-    function Animal(theName) {
-        this.name = theName;
-        this.name2 = theName + 'hh';
+var Greeter = /** @class */ (function () {
+    function Greeter() {
     }
-    return Animal;
+    Greeter.prototype.greet = function () {
+        if (this.greeting) {
+            return "Hello, " + this.greeting;
+        }
+        else {
+            return Greeter.standardGreeting;
+        }
+    };
+    Greeter.standardGreeting = "Hello, there";
+    return Greeter;
 }());
-console.log(new Animal("Cat").name);
-console.log(new Animal("Cat").name2);
+var greeter1;
+greeter1 = new Greeter();
+console.log(greeter1.greet());
+var greeterMaker = Greeter;
+greeterMaker.standardGreeting = "Hey there!";
+var greeter2 = new greeterMaker();
+console.log(greeter2.greet());
+console.log(typeof Greeter);

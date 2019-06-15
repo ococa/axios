@@ -1,21 +1,24 @@
-class Person {
-  protected name: string;
-  constructor(name: string) { this.name = name; }
-}
-
-class Employee extends Person {
-  private department: string;
-
-  constructor(name: string, department: string) {
-      super(name)
-      this.department = department;
-  }
-
-  public getElevatorPitch() {
-      return `Hello, my name is ${this.name} and I work in ${this.department}.`;
+class Greeter {
+  static standardGreeting = "Hello, there";
+  greeting: string;
+  greet() {
+      if (this.greeting) {
+          return "Hello, " + this.greeting;
+      }
+      else {
+          return Greeter.standardGreeting;
+      }
   }
 }
 
-let howard = new Employee("Howard", "Sales");
-console.log(howard.getElevatorPitch());
-console.log(howard.name); // 错误
+let greeter1: Greeter;
+greeter1 = new Greeter();
+console.log(greeter1.greet());
+
+let greeterMaker: typeof Greeter = Greeter;
+greeterMaker.standardGreeting = "Hey there!";
+
+let greeter2: Greeter = new greeterMaker();
+console.log(greeter2.greet());
+
+typeof Greeter;
