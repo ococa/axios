@@ -78,6 +78,7 @@ let strLength: number = (someValue as string).length;     // as 断言
 
 ## 接口
 
+1. 接口basic
 interface 变量对象 {
   key: type
 }
@@ -91,3 +92,38 @@ function printa(hello: Hello): void {
 let obj = {name: 123};
 printa(obj);
 ``` 
+
+2. 可选属性
+key?: type
+```
+interface SquareConfig {
+  color?: string;
+  width?: number;
+}
+function createSquare(config: SquareConfig): { color: string; area: number;} {
+  let newSquare = {color: "white", area: 100};
+  if (config.color) {
+    newSquare.color = config.color;
+  }
+  if (config.width) {
+    newSquare.area = config.width * config.width;
+  }
+  return newSquare;
+}
+
+let mySquare = createSquare({color: "black"});
+
+```
+3. 只读属性
+interface Point {
+    readonly x: number;
+    readonly y: number;
+}
+```
+interface Point {
+    readonly x: number;
+    readonly y: number;
+}
+let p1: Point = { x: 10, y: 20 };
+p1.x = 5; // error!
+```

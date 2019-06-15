@@ -1,8 +1,6 @@
-interface Hello {
-  name: number
+interface Point {
+  readonly x: number;
+  readonly y: number;
 }
-function printa(hello: Hello): void {
-  console.log(hello.name)
-}
-let obj = {name: 123};
-printa(obj);
+let p1: Point = { x: 10, y: 20 };
+p1.x = 5; // error!
