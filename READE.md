@@ -634,3 +634,103 @@ alert("card: " + pickedCard1.card + " of " + pickedCard1.suit);
 let pickedCard2 = pickCard(15);
 alert("card: " + pickedCard2.card + " of " + pickedCard2.suit);
 ```
+
+## 泛型
+
+### basic
+```
+function identity(arg: any): any {
+    return arg;
+}
+```
+加强版， 捕获arg类型，赋予t
+```
+// 定义时泛型
+function identity<T>(arg: T): T {
+    return arg;
+}
+// 使用1  传入所有的参数，包含类型参数：
+let output = identity<string>("myString");
+// 使用2  利用了类型推论 – 即编译器会根据传入的参数自动地帮助我们确定T的类型。推荐
+let output = identity("myString");  // type of output will be 'string'
+```
+
+### 泛型变量
+```
+同basic
+```
+
+### 泛型类型
+```
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+let myIdentity: <T>(arg: T) => T = identity;    //  <T>(arg: T) => T  指的是泛型函数的类型
+```
+用interface 写泛型函数
+```
+interface GenericIdentityFn {
+    <T>(arg: T): T;
+}
+
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+let myIdentity: GenericIdentityFn = identity;
+```
+或者(推荐)
+```
+interface GenericIdentityFn<T> {
+    (arg: T): T;
+}
+
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+let myIdentity: GenericIdentityFn<number> = identity;
+
+```
+### 泛型类
+```
+class GenericNumber<T> {
+    zeroValue: T;
+    add: (x: T, y: T) => T;
+}
+
+let myGenericNumber = new GenericNumber<number>();
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function(x, y) { return x + y; };
+```
+### 泛型约束
+```
+interface Lengthwise {
+    length: number;
+}
+
+function loggingIdentity<T extends Lengthwise>(arg: T): T {
+    console.log(arg.length);  // Now we know it has a .length property, so no more error
+    return arg;
+}
+loggingIdentity(3);  // Error, number doesn't have a .length property
+loggingIdentity({length: 10, value: 3});
+```
+在泛型中使用类型参数
+```
+function getProperty<T, K extends keyof T>(obj: T, key: K) {
+    return obj[key];
+}
+
+let x = { a: 1, b: 2, c: 3, d: 4 };
+
+getProperty(x, "a"); // okay
+getProperty(x, "m"); // error: Argument of type 'm' isn't assignable to 'a' | 'b' | 'c' | 'd'.
+```
+在泛型中使用类类型
+```
+function create<T>(c: {new(): T; }): T {
+    return new c();
+}
+```
