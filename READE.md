@@ -77,3 +77,17 @@ let strLength: number = (someValue as string).length;     // as 断言
 ```
 
 ## 接口
+
+interface 变量对象 {
+  key: type
+}
+```
+interface Hello {
+  name: number
+}
+function printa(hello: Hello): void {
+  console.log(hello.name)
+}
+let obj = {name: 123};
+printa(obj);
+``` 

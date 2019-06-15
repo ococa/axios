@@ -1,3 +1,8 @@
-let someValue: any = 'this is a string';
-let strLength: number = (<string>someValue).length;
-let strLength2: number = (someValue as string).length;
+interface Hello {
+  name: number
+}
+function printa(hello: Hello): void {
+  console.log(hello.name)
+}
+let obj = {name: 123};
+printa(obj);

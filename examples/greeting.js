@@ -1,3 +1,5 @@
-var someValue = 'this is a string';
-var strLength = someValue.length;
-var strLength2 = someValue.length;
+function printa(hello) {
+    console.log(hello.name);
+}
+var obj = { name: 123 };
+printa(obj);
